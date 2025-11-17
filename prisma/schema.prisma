@@ -1,0 +1,140 @@
+// prisma/schema.prisma
+// Copy this to your prisma/schema.prisma file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  clerkId       String    @unique
+  email         String    @unique
+  name          String?
+  imageUrl      String?
+  
+  // Subscription
+  plan          Plan      @default(FREE)
+  stripeCustomerId String?
+  stripeSubscriptionId String?
+  stripePriceId String?
+  stripeCurrentPeriodEnd DateTime?
+  
+  // Usage
+  requestsThisMonth Int   @default(0)
+  lastResetDate     DateTime @default(now())
+  
+  // Relations
+  codeReviews   CodeReview[]
+  docs          Documentation[]
+  bugs          BugAnalysis[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@index([clerkId])
+  @@index([email])
+}
+
+enum Plan {
+  FREE
+  PRO
+  TEAM
+}
+
+model CodeReview {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Input
+  code        String   @db.Text
+  language    String
+  fileName    String?
+  
+  // AI Response
+  issues      Json     
+  suggestions Json     
+  score       Int      
+  
+  // Metadata
+  tokensUsed  Int
+  aiModel     String   @default("gpt-4")
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Documentation {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Input
+  code        String   @db.Text
+  language    String
+  docType     DocType
+  
+  // AI Response
+  markdown    String   @db.Text
+  
+  // Metadata
+  tokensUsed  Int
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([createdAt])
+}
+
+enum DocType {
+  README
+  API
+  COMMENTS
+  INLINE
+}
+
+model BugAnalysis {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Input
+  errorLog    String   @db.Text
+  stackTrace  String?  @db.Text
+  context     String?  @db.Text
+  
+  // AI Response
+  diagnosis   String   @db.Text
+  solutions   Json     
+  references  Json?    
+  
+  // Metadata
+  tokensUsed  Int
+  
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Waitlist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  source    String?
+  notified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  
+  @@index([email])
+}
+
+// After creating this file, run:
+// npx prisma generate
+// npx prisma db push
