@@ -1,6 +1,4 @@
-// ============================================
 // FILE: app/(marketing)/page.tsx
-// ============================================
 
 import { Hero } from "../components/landing/Hero";
 import Features  from "../components/landing/Features";

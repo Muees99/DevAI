@@ -1,6 +1,4 @@
-// ============================================
-// FILE: components/shared/AnimatedBackground.tsx
-// ============================================
+//  FILE: components/shared/AnimatedBackground.tsx
 
 "use client";
 
