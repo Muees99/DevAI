@@ -89,6 +89,96 @@ export default function CodeReview() {
     "ruby",
   ];
 
+  //  const handleReview = async (): Promise<void> => {
+  //      if (!code.trim()) {
+  //     alert("Please enter some code to review");
+  //     return;
+  //     }
+
+  //     setReviewing(true);
+
+  //     try {
+  //     const response = 
+  //     await fetch("https://api.anthropic.com/v1/messages", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         model: "claude-sonnet-4-20250514",
+  //         max_tokens: 1000,
+  //         messages: [
+  //           {
+  //             role: "user",
+  //             content: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
+  //         {
+  //           "overallScore": number (0-100),
+  //           "summary": "brief overview of code quality",
+  //           "strengths": ["strength 1", "strength 2"],
+  //           "scores": {
+  //           "readability": number (0-100),
+  //            "maintainability": number (0-100),
+  //             "performance": number (0-100),
+  //            "security": number (0-100),
+  //            "bestPractices": number (0-100),
+  //            "documentation": number (0-100)
+  //         },
+  //           "issues": [
+  //          {
+  //           "severity": "critical|major|minor",
+  //           "category": "readability|performance|security|best-practices|documentation",
+  //           "title": "issue title",
+  //           "description": "detailed description",
+  //           "lineNumber": number or null,
+  //           "suggestion": "how to improve"
+  //          }
+  //           ],
+  //       "improvements": [
+  //          {
+  //          "title": "improvement title",
+  //           "description": "what to improve",
+  //           "impact": "high|medium|low"
+  //         }
+  //       ],
+  //       "codeSmells": number,
+  //       "complexity": "low|medium|high"
+  //         }
+
+  //     Code to review:
+  //     \`\`\`${selectedLanguage}
+  //     ${code}
+  //     \`\`\``,
+  //           },
+  //         ],
+  //       }),
+  //     });
+
+  //     // const data = await response.json();
+  //     // const resultText = data.content
+  //     //   .map((item: any) => (item.type === "text" ? item.text : ""))
+  //     //   .join("\n")
+  //     //   .trim();
+
+
+  //     const data: ApiResponse = await response.json();
+  //     const resultText = data.content
+  //       .map((item: ContentItem) => (item.type === "text" ? item.text : ""))
+  //       .join("\n")
+  //       .trim();
+
+  //     const cleanText = resultText.replace(/```json|```/g, "").trim();
+  //     const parsed: Review = JSON.parse(cleanText);
+
+  //     setReview(parsed);
+  //     } catch (error) {
+  //     console.error("Review error:", error);
+  //     alert("Failed to review code. Please try again.");
+  //     } finally {
+  //     setReviewing(false);
+  //     }
+  //     };
+
+
   const handleReview = async (): Promise<void> => {
     if (!code.trim()) {
       alert("Please enter some code to review");
@@ -98,18 +188,15 @@ export default function CodeReview() {
     setReviewing(true);
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+      const response = await fetch("/api/code-review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [
-            {
-              role: "user",
-              content: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
+          language: selectedLanguage,
+          code,
+          prompt: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
 {
   "overallScore": number (0-100),
   "summary": "brief overview of code quality",
@@ -144,22 +231,16 @@ export default function CodeReview() {
 }
 
 Code to review:
-\`\`\`${selectedLanguage}
-${code}
-\`\`\``,
-            },
-          ],
+${code}`,
         }),
       });
 
-      // const data = await response.json();
-      // const resultText = data.content
-      //   .map((item: any) => (item.type === "text" ? item.text : ""))
-      //   .join("\n")
-      //   .trim();
-
+      if (!response.ok) {
+        throw new Error("Review request failed");
+      }
 
       const data: ApiResponse = await response.json();
+
       const resultText = data.content
         .map((item: ContentItem) => (item.type === "text" ? item.text : ""))
         .join("\n")
@@ -176,6 +257,7 @@ ${code}
       setReviewing(false);
     }
   };
+
 
   const handleExport = (): void => {
     if (!review) return;
