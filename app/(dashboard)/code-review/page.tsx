@@ -217,16 +217,6 @@ ${code}`,
     return colors[impact] || colors.low;
   };
 
-  // const getCategoryIcon = (category: Category): JSX.Element => {
-  //   const icons: Record<Category, JSX.Element> = {
-  //     readability: <Eye className="w-4 h-4" />,
-  //     performance: <Zap className="w-4 h-4" />,
-  //     security: <Shield className="w-4 h-4" />,
-  //     "best-practices": <Target className="w-4 h-4" />,
-  //     documentation: <BookOpen className="w-4 h-4" />,
-  //   };
-  //   return icons[category] || <Code className="w-4 h-4" />;
-  // };
 
   const getCategoryIcon = (category: Category): React.ReactElement => {
     const icons: Record<Category, React.ReactElement> = {
