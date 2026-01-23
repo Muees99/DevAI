@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { ArrowLeft } from "lucide-react";
 import {
   Code,
   FileCode,
@@ -228,9 +229,26 @@ ${code}`,
     };
     return icons[category] || <Code className="w-4 h-4" />;
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
+      <div className="border-b border-white/10 ">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <button
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.location.assign("/dashboard");
+              }
+            }}
+            className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>Back to Dashboard</span>
+          </button>
+        </div>
+      </div>
+      
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
