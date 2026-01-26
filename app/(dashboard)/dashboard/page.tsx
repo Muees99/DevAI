@@ -948,11 +948,11 @@ const handleLogout = (): void => {
                     >
                       <div className="w-full flex gap-1 items-end justify-center h-40">
                         <div
-                          className="w-1/2 bg-gradient-to-t from-red-500 to-red-400 rounded-t transition-all hover:opacity-80"
+                          className="w-1/2 bg-linear-to-t from-red-500 to-red-400 rounded-t transition-all hover:opacity-80"
                           style={{ height: `${(data.bugs / maxValue) * 100}%` }}
                         ></div>
                         <div
-                          className="w-1/2 bg-gradient-to-t from-blue-500 to-blue-400 rounded-t transition-all hover:opacity-80"
+                          className="w-1/2 bg-linear-to-t from-blue-500 to-blue-400 rounded-t transition-all hover:opacity-80"
                           style={{
                             height: `${(data.reviews / maxValue) * 100}%`,
                           }}
