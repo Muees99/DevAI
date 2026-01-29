@@ -15,6 +15,7 @@ import {
   Zap,
   Shield,
   TrendingUp,
+  ArrowLeft,
 } from "lucide-react";
 
 export default function BugAnalyzerPage() {
@@ -183,6 +184,21 @@ export default function BugAnalyzerPage() {
 
   return (
     <div className="min-h-screen  p-6">
+      <div className="border-b border-white/10 ">
+              <div className="max-w-7xl mx-auto px-6 py-4">
+                <button
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.location.assign("/dashboard");
+                    }
+                  }}
+                  className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  <span>Back to Dashboard</span>
+                </button>
+              </div>
+            </div>
       {/* bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 */}
       <div className="max-w-7xl mx-auto">
         {/* Header */}
