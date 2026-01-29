@@ -664,7 +664,7 @@ export default function Dashboard() {
 
   const navItems = [
     { name: "Dashboard", icon: Home, path: "dashboard" },
-    { name: "Bug Analyzer", icon: Bug, path: "bug-analyser" },
+    { name: "Bug Analyzer", icon: Bug, path: "bug-analyzer" },
     { name: "Code Review", icon: FileCode, path: "code-review" },
     { name: "Analytics", icon: BarChart3, path: "analytics" },
     { name: "Settings", icon: Settings, path: "settings" },
@@ -693,7 +693,8 @@ const handleLogout = (): void => {
   };
 };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex">
+    <div className="min-h-screen  flex">
+      {/* bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 */}
       {/* Logout Confirmation Modal */}
       {showLogoutModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -737,7 +738,7 @@ const handleLogout = (): void => {
           {sidebarOpen ? (
             <>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                <div className="p-2 bg-linear-to-br from-purple-500 to-blue-500 rounded-xl">
                   <Code className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -773,11 +774,11 @@ const handleLogout = (): void => {
                   onClick={() => handleNavClick(item.path)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                     isActive
-                      ? "bg-gradient-to-r from-purple-500 to-blue-500 text-white shadow-lg shadow-purple-500/50"
+                      ? "bg-linear-to-br from-purple-500 to-blue-500 text-white shadow-lg shadow-purple-500/50"
                       : "text-gray-400 hover:bg-white/10 hover:text-white"
                   }`}
                 >
-                  <item.icon className="w-5 h-5 flex-shrink-0" />
+                  <item.icon className="w-5 h-5 shrink-0" />
                   {sidebarOpen && (
                     <span className="font-medium">{item.name}</span>
                   )}
@@ -794,7 +795,7 @@ const handleLogout = (): void => {
               sidebarOpen ? "" : "justify-center"
             }`}
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10  from-purple-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
               <User className="w-5 h-5 text-white" />
             </div>
             {sidebarOpen && (
@@ -802,7 +803,9 @@ const handleLogout = (): void => {
                 <p className="text-white font-medium text-sm truncate">
                   Muees A.
                 </p>
-                <p className="text-gray-400 text-xs truncate">muees@devai.com</p>
+                <p className="text-gray-400 text-xs truncate">
+                  muees@devai.com
+                </p>
               </div>
             )}
           </div>
