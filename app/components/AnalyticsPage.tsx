@@ -906,8 +906,8 @@ export default function AnalyticsPage() {
       </div>
     </div>
   );
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
+
+
+

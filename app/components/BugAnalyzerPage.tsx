@@ -106,11 +106,14 @@ export default function BugAnalyzerPage() {
 
       const resultText = data.content
         .filter(
-<<<<<<< HEAD
+
           (item: AnthropicContentItem) => item.type === "text" && item.text,
-=======
+
           (item: AnthropicContentItem) => item.type === "text" && item.text
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
+
+
+          (item: AnthropicContentItem) => item.type === "text" && item.text
+
         )
         .map((item: AnthropicContentItem) => item.text!)
         .join("\n")
@@ -189,7 +192,7 @@ export default function BugAnalyzerPage() {
   return (
     <div className="min-h-screen  p-6">
       <div className="border-b border-white/10 ">
-<<<<<<< HEAD
+
         <div className="max-w-7xl mx-auto px-6 py-4">
           <button
             onClick={() => {
@@ -204,7 +207,7 @@ export default function BugAnalyzerPage() {
           </button>
         </div>
       </div>
-=======
+
               <div className="max-w-7xl mx-auto px-6 py-4">
                 <button
                   onClick={() => {
@@ -219,7 +222,7 @@ export default function BugAnalyzerPage() {
                 </button>
               </div>
             </div>
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
+
       {/* bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 */}
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -435,11 +438,13 @@ function calculateTotal(items) {
                         <div className="flex items-start gap-3 mb-3">
                           <div
                             className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border ${getSeverityColor(
-<<<<<<< HEAD
+
                               bug.severity,
-=======
+
                               bug.severity
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
+
+                              bug.severity
+
                             )}`}
                           >
                             {getSeverityIcon(bug.severity)}

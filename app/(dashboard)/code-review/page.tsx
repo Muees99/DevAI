@@ -1,9 +1,5 @@
 "use client";
 import React, { useState } from "react";
-<<<<<<< HEAD
-=======
-import { ArrowLeft } from "lucide-react";
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
 import {
   Code,
   FileCode,
@@ -21,10 +17,7 @@ import {
   GitBranch,
   Users,
   Clock,
-<<<<<<< HEAD
   ArrowLeft,
-=======
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
 } from "lucide-react";
 
 // Type Definitions
@@ -111,28 +104,18 @@ export default function CodeReview() {
     setReviewing(true);
 
     try {
-<<<<<<< HEAD
       const response = await fetch("https://api.anthropic.com/v1/messages", {
-=======
-      const response = await fetch("/api/code-review", {
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-<<<<<<< HEAD
           model: "claude-sonnet-4-20250514",
           max_tokens: 1000,
           messages: [
             {
               role: "user",
               content: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
-=======
-          language: selectedLanguage,
-          code,
-          prompt: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
 {
   "overallScore": number (0-100),
   "summary": "brief overview of code quality",
@@ -167,7 +150,6 @@ export default function CodeReview() {
 }
 
 Code to review:
-<<<<<<< HEAD
 \`\`\`${selectedLanguage}
 ${code}
 \`\`\``,
@@ -176,21 +158,13 @@ ${code}
         }),
       });
 
-    
+      // const data = await response.json();
+      // const resultText = data.content
+      //   .map((item: any) => (item.type === "text" ? item.text : ""))
+      //   .join("\n")
+      //   .trim();
 
       const data: ApiResponse = await response.json();
-=======
-${code}`,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Review request failed");
-      }
-
-      const data: ApiResponse = await response.json();
-
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
       const resultText = data.content
         .map((item: ContentItem) => (item.type === "text" ? item.text : ""))
         .join("\n")
@@ -252,11 +226,17 @@ ${code}`,
     return colors[impact] || colors.low;
   };
 
-<<<<<<< HEAD
-  
-=======
+  // const getCategoryIcon = (category: Category): JSX.Element => {
+  //   const icons: Record<Category, JSX.Element> = {
+  //     readability: <Eye className="w-4 h-4" />,
+  //     performance: <Zap className="w-4 h-4" />,
+  //     security: <Shield className="w-4 h-4" />,
+  //     "best-practices": <Target className="w-4 h-4" />,
+  //     documentation: <BookOpen className="w-4 h-4" />,
+  //   };
+  //   return icons[category] || <Code className="w-4 h-4" />;
+  // };
 
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
   const getCategoryIcon = (category: Category): React.ReactElement => {
     const icons: Record<Category, React.ReactElement> = {
       readability: <Eye className="w-4 h-4" />,
@@ -267,10 +247,6 @@ ${code}`,
     };
     return icons[category] || <Code className="w-4 h-4" />;
   };
-<<<<<<< HEAD
-=======
-  
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
@@ -289,10 +265,6 @@ ${code}`,
           </button>
         </div>
       </div>
-<<<<<<< HEAD
-=======
-      
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -383,11 +355,7 @@ class UserManager {
                   </div>
                   <div
                     className={`text-2xl font-bold ${getScoreColor(
-<<<<<<< HEAD
                       review.overallScore,
-=======
-                      review.overallScore
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
                     )}`}
                   >
                     {review.overallScore}%
@@ -509,11 +477,7 @@ class UserManager {
                           <div className="text-center">
                             <div
                               className={`text-3xl font-bold ${getScoreColor(
-<<<<<<< HEAD
                                 review.overallScore,
-=======
-                                review.overallScore
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
                               )}`}
                             >
                               {review.overallScore}
@@ -561,11 +525,7 @@ class UserManager {
                           </span>
                           <span
                             className={`text-sm font-bold ${getScoreColor(
-<<<<<<< HEAD
                               value,
-=======
-                              value
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
                             )}`}
                           >
                             {value}%
@@ -574,11 +534,7 @@ class UserManager {
                         <div className="w-full bg-slate-900/50 rounded-full h-2">
                           <div
                             className={`bg-gradient-to-r ${getScoreGradient(
-<<<<<<< HEAD
                               value,
-=======
-                              value
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
                             )} h-2 rounded-full transition-all duration-500`}
                             style={{ width: `${value}%` }}
                           />
@@ -604,11 +560,7 @@ class UserManager {
                         <div className="flex items-start gap-2 mb-2">
                           <div
                             className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${getSeverityColor(
-<<<<<<< HEAD
                               issue.severity,
-=======
-                              issue.severity
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
                             )}`}
                           >
                             {issue.severity.toUpperCase()}
@@ -661,11 +613,7 @@ class UserManager {
                           <div className="flex items-start gap-2 mb-2">
                             <div
                               className={`px-2 py-1 rounded-full text-xs font-semibold ${getImpactColor(
-<<<<<<< HEAD
                                 improvement.impact,
-=======
-                                improvement.impact
->>>>>>> 1a972eee85f026b8cf57725939512eaacb77adbf
                               )}`}
                             >
                               {improvement.impact.toUpperCase()} IMPACT
