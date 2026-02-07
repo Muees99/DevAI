@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import {
   Code,
   FileCode,
@@ -18,6 +17,7 @@ import {
   GitBranch,
   Users,
   Clock,
+  ArrowLeft,
 } from "lucide-react";
 
 // Type Definitions
@@ -104,15 +104,18 @@ export default function CodeReview() {
     setReviewing(true);
 
     try {
-      const response = await fetch("/api/code-review", {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          language: selectedLanguage,
-          code,
-          prompt: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [
+            {
+              role: "user",
+              content: `You are an expert code reviewer. Review the following ${selectedLanguage} code for quality, best practices, and improvements. Return ONLY a valid JSON object (no markdown, no preamble) with this exact structure:
 {
   "overallScore": number (0-100),
   "summary": "brief overview of code quality",
@@ -147,16 +150,21 @@ export default function CodeReview() {
 }
 
 Code to review:
-${code}`,
+\`\`\`${selectedLanguage}
+${code}
+\`\`\``,
+            },
+          ],
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Review request failed");
-      }
+      // const data = await response.json();
+      // const resultText = data.content
+      //   .map((item: any) => (item.type === "text" ? item.text : ""))
+      //   .join("\n")
+      //   .trim();
 
       const data: ApiResponse = await response.json();
-
       const resultText = data.content
         .map((item: ContentItem) => (item.type === "text" ? item.text : ""))
         .join("\n")
@@ -218,6 +226,16 @@ ${code}`,
     return colors[impact] || colors.low;
   };
 
+  // const getCategoryIcon = (category: Category): JSX.Element => {
+  //   const icons: Record<Category, JSX.Element> = {
+  //     readability: <Eye className="w-4 h-4" />,
+  //     performance: <Zap className="w-4 h-4" />,
+  //     security: <Shield className="w-4 h-4" />,
+  //     "best-practices": <Target className="w-4 h-4" />,
+  //     documentation: <BookOpen className="w-4 h-4" />,
+  //   };
+  //   return icons[category] || <Code className="w-4 h-4" />;
+  // };
 
   const getCategoryIcon = (category: Category): React.ReactElement => {
     const icons: Record<Category, React.ReactElement> = {
@@ -229,7 +247,6 @@ ${code}`,
     };
     return icons[category] || <Code className="w-4 h-4" />;
   };
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
@@ -248,7 +265,6 @@ ${code}`,
           </button>
         </div>
       </div>
-      
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -339,7 +355,7 @@ class UserManager {
                   </div>
                   <div
                     className={`text-2xl font-bold ${getScoreColor(
-                      review.overallScore
+                      review.overallScore,
                     )}`}
                   >
                     {review.overallScore}%
@@ -461,7 +477,7 @@ class UserManager {
                           <div className="text-center">
                             <div
                               className={`text-3xl font-bold ${getScoreColor(
-                                review.overallScore
+                                review.overallScore,
                               )}`}
                             >
                               {review.overallScore}
@@ -509,7 +525,7 @@ class UserManager {
                           </span>
                           <span
                             className={`text-sm font-bold ${getScoreColor(
-                              value
+                              value,
                             )}`}
                           >
                             {value}%
@@ -518,7 +534,7 @@ class UserManager {
                         <div className="w-full bg-slate-900/50 rounded-full h-2">
                           <div
                             className={`bg-gradient-to-r ${getScoreGradient(
-                              value
+                              value,
                             )} h-2 rounded-full transition-all duration-500`}
                             style={{ width: `${value}%` }}
                           />
@@ -544,7 +560,7 @@ class UserManager {
                         <div className="flex items-start gap-2 mb-2">
                           <div
                             className={`flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold border ${getSeverityColor(
-                              issue.severity
+                              issue.severity,
                             )}`}
                           >
                             {issue.severity.toUpperCase()}
@@ -597,7 +613,7 @@ class UserManager {
                           <div className="flex items-start gap-2 mb-2">
                             <div
                               className={`px-2 py-1 rounded-full text-xs font-semibold ${getImpactColor(
-                                improvement.impact
+                                improvement.impact,
                               )}`}
                             >
                               {improvement.impact.toUpperCase()} IMPACT
