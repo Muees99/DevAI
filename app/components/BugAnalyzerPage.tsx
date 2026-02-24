@@ -582,9 +582,9 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-// ===========================
+
 // TYPE DEFINITIONS
-// ===========================
+
 
 type BugSeverity = "critical" | "high" | "medium" | "low";
 type BugType = "syntax" | "logic" | "security" | "performance";
@@ -641,9 +641,9 @@ interface ActivityItem {
   };
 }
 
-// ===========================
+
 // CONSTANTS
-// ===========================
+
 
 const LANGUAGES = [
   "javascript",
@@ -731,9 +731,9 @@ const ACTIVITY_CONFIG: Record<
   },
 };
 
-// ===========================
+
 // UTILITY FUNCTIONS
-// ===========================
+
 
 const extractTextFromResponse = (data: AnthropicResponse): string => {
   return data.content
@@ -795,9 +795,9 @@ const formatFullTimestamp = (timestamp: number): string => {
   });
 };
 
-// ===========================
+
 // ACTIVITY MANAGEMENT
-// ===========================
+
 
 const loadActivities = (): ActivityItem[] => {
   if (typeof window === "undefined") return [];
@@ -835,9 +835,9 @@ const clearAllActivities = (): void => {
   localStorage.removeItem(ACTIVITY_STORAGE_KEY);
 };
 
-// ===========================
+
 // SUB-COMPONENTS
-// ===========================
+
 
 const BackButton: React.FC = () => (
   <div className="border-b border-white/10">
@@ -1344,9 +1344,9 @@ const ActivitySidebar: React.FC<ActivitySidebarProps> = ({
   );
 };
 
-// ===========================
+
 // MAIN COMPONENT
-// ===========================
+
 
 export default function BugAnalyzerPage() {
   const [code, setCode] = useState("");
