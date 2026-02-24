@@ -5,9 +5,6 @@
 
 import BugAnalyzerPage from "@/app/components/BugAnalyzerPage";
 
-import BugAnalyzerPage from "@/app/components/BugAnalyzerPage"
-
-import BugAnalyzerPage from "@/app/components/BugAnalyzerPage"
 
 
 export default function Page() {
